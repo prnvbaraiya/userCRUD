@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { User } from 'src/app/core/enums/User.enum';
-
 import { HttpClient } from '@angular/common/http';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 import { Subscription } from 'rxjs';
@@ -22,12 +21,11 @@ export class ViewUsersComponent implements OnInit {
   ];
   dataSource: User[] = [];
   subscription!: Subscription;
+  searchTerm: String = '';
 
   constructor(
-    private _http: HttpClient,
     private _apiservice: ApiserviceService,
-    private _router: Router,
-    private changeDetectorRef: ChangeDetectorRef
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,15 +35,30 @@ export class ViewUsersComponent implements OnInit {
   getUsers() {
     this.subscription = this._apiservice
       .getUsers()
-      .subscribe((res) => (this.dataSource = res as User[]));
+      .subscribe((res: any) => (this.dataSource = res as User[]));
   }
 
   deleteUser(id: number) {
     this._apiservice.deleteUser(id).subscribe({
       next: () => this._router.navigate(['/users']),
-      error: (err) => console.log(err),
+      error: (err: any) => console.log(err),
     });
     this.dataSource = this.dataSource.filter((item) => item.id !== id);
+  }
+
+  filterUser() {
+    console.log(this.dataSource);
+    if (this.dataSource) {
+      return this.dataSource.filter(
+        (user) =>
+          user.firstName
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          user.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+    return [];
   }
 
   ngOnDestroy() {
