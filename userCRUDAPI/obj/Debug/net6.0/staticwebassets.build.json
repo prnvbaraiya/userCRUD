@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "4y7u+uuKhsE3FIWoKoUXyouENrkgDrw6bnfA6SLXMoU=",
+  "Source": "userCRUDAPI",
+  "BasePath": "_content/userCRUDAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

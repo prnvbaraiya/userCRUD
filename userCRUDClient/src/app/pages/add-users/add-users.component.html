@@ -1,0 +1,31 @@
+<div>
+  <form
+    [formGroup]="userForm"
+    (ngSubmit)="handleSubmit()"
+    class="mx-2 flex-column"
+  >
+    <div class="flex-space-between">
+      <a routerLink="../../">
+        <button type="submit" mat-flat-button color="warn">Back</button>
+      </a>
+      <h1 class="center">Add User</h1>
+      <button type="submit" mat-flat-button color="primary">Submit</button>
+    </div>
+    <mat-form-field fullWidth>
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
+    <mat-form-field fullWidth>
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
+    <mat-form-field fullWidth>
+      <mat-label>Age</mat-label>
+      <input matInput type="number" formControlName="age" />
+    </mat-form-field>
+    <mat-form-field fullWidth>
+      <mat-label>E-mail</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+  </form>
+</div>
