@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
 
 @Component({
   selector: 'app-view-users',
@@ -25,8 +27,21 @@ export class ViewUsersComponent implements OnInit {
 
   constructor(
     private _apiservice: ApiserviceService,
-    private _router: Router
+    private _router: Router,
+    public dialog: MatDialog
   ) {}
+
+  openDialog(id: number): void {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      data: {
+        title: 'Delete',
+        data: 'Are you sure you want to delete user ?',
+        name: 'prnv',
+        userId: id,
+        onSubmit: (userId: number) => this.deleteUser(userId),
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.getUsers();
@@ -46,8 +61,7 @@ export class ViewUsersComponent implements OnInit {
     this.dataSource = this.dataSource.filter((item) => item.id !== id);
   }
 
-  filterUser() {
-    console.log(this.dataSource);
+  get filteredUsers() {
     if (this.dataSource) {
       return this.dataSource.filter(
         (user) =>
@@ -55,6 +69,10 @@ export class ViewUsersComponent implements OnInit {
             .toLowerCase()
             .includes(this.searchTerm.toLowerCase()) ||
           user.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          user.age
+            .toString()
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
           user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }

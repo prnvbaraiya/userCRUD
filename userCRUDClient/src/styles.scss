@@ -70,6 +70,16 @@ a {
   align-items: center;
 }
 
+.flex-gap-1 {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-gap-2 {
+  display: flex;
+  gap: 2rem;
+}
+
 .text-white {
   color: white;
 }
@@ -105,4 +115,16 @@ a {
 
 .mb-2 {
   margin-bottom: 2rem;
+}
+
+.px-2 {
+  padding: 0 2rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
