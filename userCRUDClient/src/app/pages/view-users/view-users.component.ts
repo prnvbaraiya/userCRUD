@@ -1,11 +1,14 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { User } from 'src/app/core/enums/User.enum';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from 'src/app/components/dialog-box/dialog-box.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-users',
@@ -26,8 +29,10 @@ export class ViewUsersComponent implements OnInit {
   searchTerm: String = '';
 
   constructor(
+    private _route: ActivatedRoute,
     private _apiservice: ApiserviceService,
     private _router: Router,
+    private _snackbar: MatSnackBar,
     public dialog: MatDialog
   ) {}
 
@@ -36,7 +41,6 @@ export class ViewUsersComponent implements OnInit {
       data: {
         title: 'Delete',
         data: 'Are you sure you want to delete user ?',
-        name: 'prnv',
         userId: id,
         onSubmit: (userId: number) => this.deleteUser(userId),
       },
@@ -44,6 +48,9 @@ export class ViewUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._route.paramMap.subscribe((params) => {
+      console.log(params);
+    });
     this.getUsers();
   }
 
@@ -59,6 +66,9 @@ export class ViewUsersComponent implements OnInit {
       error: (err: any) => console.log(err),
     });
     this.dataSource = this.dataSource.filter((item) => item.id !== id);
+    this._snackbar.open('User Deleted Successfully', '', {
+      duration: 3000,
+    });
   }
 
   get filteredUsers() {

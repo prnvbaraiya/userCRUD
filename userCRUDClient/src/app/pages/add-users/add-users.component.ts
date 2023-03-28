@@ -32,7 +32,7 @@ export class AddUsersComponent implements OnInit {
 
   handleSubmit() {
     const res = this._apiService.addUser(this.userForm.value).subscribe({
-      next: () => this._router.navigate(['/users']),
+      next: () => this._router.navigate(['/users', { foo: 'foo' }]),
       error: (err) => console.log('Error:', err),
     });
   }
