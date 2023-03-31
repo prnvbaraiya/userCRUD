@@ -11,21 +11,49 @@
       <h1 class="center">Update User</h1>
       <button type="submit" mat-flat-button color="primary">Update</button>
     </div>
-    <mat-form-field fullWidth>
-      <mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName" />
-    </mat-form-field>
-    <mat-form-field fullWidth>
-      <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName" />
-    </mat-form-field>
-    <mat-form-field fullWidth>
-      <mat-label>Age</mat-label>
-      <input matInput type="number" formControlName="age" />
-    </mat-form-field>
-    <mat-form-field fullWidth>
-      <mat-label>E-mail</mat-label>
-      <input matInput type="email" formControlName="email" />
-    </mat-form-field>
+    <div class="content--container">
+      <div class="left--content">
+        <mat-form-field fullWidth>
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+        <mat-form-field fullWidth>
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+        <mat-form-field fullWidth>
+          <mat-label>Age</mat-label>
+          <input matInput type="number" formControlName="age" />
+        </mat-form-field>
+        <mat-form-field fullWidth>
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+      </div>
+      <div class="right--content">
+        <label for="profile-photo">
+          <img *ngIf="url" class="person--icon" [src]="url" />
+          <mat-icon *ngIf="!url" class="person--icon">
+            account_circle
+          </mat-icon>
+        </label>
+        <label
+          *ngIf="!url"
+          for="profile-photo"
+          class="file-upload text-uppercase"
+        >
+          UPLOAD DISPLAY PICTURE
+        </label>
+        <input
+          type="file"
+          formControlName="profilePhoto"
+          id="profile-photo"
+          (change)="readUrl($event)"
+        />
+        <label *ngIf="!url" class="form--item--label">
+          Max. image size: 5 MB
+        </label>
+      </div>
+    </div>
   </form>
 </div>

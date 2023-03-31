@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ViewUsersComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
+    'profile',
     'firstName',
     'lastName',
     'age',
@@ -48,16 +49,14 @@ export class ViewUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._route.paramMap.subscribe((params) => {
-      console.log(params);
-    });
+    this._route.paramMap.subscribe((params) => {});
     this.getUsers();
   }
 
   getUsers() {
-    this.subscription = this._apiservice
-      .getUsers()
-      .subscribe((res: any) => (this.dataSource = res as User[]));
+    this.subscription = this._apiservice.getUsers().subscribe((res: any) => {
+      this.dataSource = res as User[];
+    });
   }
 
   deleteUser(id: number) {

@@ -1,0 +1,32 @@
+.content--container {
+  display: flex;
+}
+
+.right--content {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  justify-content: center;
+  align-items: center;
+  .person--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b5c5d4;
+    font-size: 130px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+  }
+}
+
+.left--content {
+  display: flex;
+  flex-direction: column;
+  width: 75vw;
+  gap: 15px;
+}
+
+input[type="file"] {
+  display: none;
+}

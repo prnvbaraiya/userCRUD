@@ -11,6 +11,8 @@ import { ApiserviceService } from 'src/app/services/apiservice.service';
 })
 export class AddUsersComponent implements OnInit {
   userForm!: FormGroup;
+  profilePhoto: any;
+  url: any;
 
   constructor(
     public fb: FormBuilder,
@@ -23,27 +25,34 @@ export class AddUsersComponent implements OnInit {
 
   reactiveForm() {
     this.userForm = this.fb.group({
+      profilePhoto: [''],
+      fileAsBase64: [''],
+      FileAsByteArray: [''],
       firstName: [''],
       lastName: [''],
       age: [''],
       email: [''],
     });
+  }
+
+  readUrl(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = (event: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result?.toString();
+        this.userForm.controls['fileAsBase64'].setValue(this.url);
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   handleSubmit() {
+    this.userForm.removeControl('profilePhoto');
     const res = this._apiService.addUser(this.userForm.value).subscribe({
       next: () => this._router.navigate(['/users', { foo: 'foo' }]),
       error: (err) => console.log('Error:', err),
-    });
-  }
-
-  handleReset(e: any) {
-    e.preventDefault();
-    this.userForm = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      age: [''],
-      email: [''],
     });
   }
 }

@@ -14,6 +14,7 @@ export class UpdateUsersComponent implements OnInit {
   user_id: number;
   userForm!: FormGroup;
   subscription: Subscription[] = [];
+  url: any;
 
   constructor(
     private _route: ActivatedRoute,
@@ -32,7 +33,11 @@ export class UpdateUsersComponent implements OnInit {
         this.user_id = +param_user_id;
         const sub = this._apiService.getUser(+param_user_id).subscribe({
           next: (res: any) => {
+            this.url = 'data:image/jpeg;base64,' + res.fileAsByteArray;
             this.userForm.setValue({
+              profilePhoto: '',
+              fileAsBase64: this.url,
+              FileAsByteArray: res.fileAsByteArray,
               id: res.id,
               firstName: res.firstName,
               lastName: res.lastName,
@@ -49,6 +54,9 @@ export class UpdateUsersComponent implements OnInit {
 
   reactiveForm() {
     this.userForm = this.fb.group({
+      profilePhoto: [''],
+      fileAsBase64: [''],
+      FileAsByteArray: [''],
       id: [''],
       firstName: [''],
       lastName: [''],
@@ -57,7 +65,21 @@ export class UpdateUsersComponent implements OnInit {
     });
   }
 
+  readUrl(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = (event: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result?.toString();
+        this.userForm.controls['fileAsBase64'].setValue(this.url);
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
   handleUpdate() {
+    this.userForm.removeControl('profilePhoto');
     this._apiService.updateUser(this.user_id, this.userForm.value).subscribe({
       next: (res) => this._router.navigate(['/users']),
       error: (err) => console.log('Error:', err),
