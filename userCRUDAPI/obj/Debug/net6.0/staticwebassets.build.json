@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "4y7u+uuKhsE3FIWoKoUXyouENrkgDrw6bnfA6SLXMoU=",
+  "Hash": "OXoQJiV/tnN+8IDDAsqRbbLhQ4y5gL1uUT9AASpuEUQ=",
   "Source": "userCRUDAPI",
   "BasePath": "_content/userCRUDAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "userCRUDAPI\\wwwroot",
+      "Source": "userCRUDAPI",
+      "ContentRoot": "D:\\Documents\\Zeus learning\\Demo\\dotnetDemo\\userCRUD\\userCRUDAPI\\wwwroot\\",
+      "BasePath": "_content/userCRUDAPI",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }
